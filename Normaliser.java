@@ -15,22 +15,22 @@ public class Normaliser {
         int result1 = Levenshtein(title,title1), result2 = Levenshtein(title,title2);
         int result3 = Levenshtein(title,title3), result4 = Levenshtein(title,title4);
         //find title with highest similarity and return it
-        if (result1<result2||result1<result3||result1<result4){
+        if (result1<result2&&result1<result3&&result1<result4){
             return title1;
         }else
-        if (result2<result1||result2<result3||result2<result4){
+        if (result2<result1&&result2<result3&&result2<result4){
             return title2;
         }else
-        if (result3<result2||result3<result1||result3<result4){
+        if (result3<result2&&result3<result1&&result3<result4){
             return title3;
         }else    
-        if (result4<result2||result4<result3||result4<result1){
+        if (result4<result2&&result4<result3&&result4<result1){
             return title4;
         }
         else return null;
     }
 
-    private int Levenshtein(String a, String b) {
+    public int Levenshtein(String a, String b) {
         /*Standard Levenshtein algorithm measures the minimum number of edits
         *to convert one string into another. Credit to rosettacode.org
         */
@@ -50,6 +50,7 @@ public class Normaliser {
                 costs[j] = cj;
             }
         }
+        System.out.println(costs[b.length()]);
         return costs[b.length()];    }
 
 }
