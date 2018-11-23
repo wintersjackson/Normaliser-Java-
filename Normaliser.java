@@ -1,33 +1,29 @@
 
 package feefo.examples;
 import java.lang.*;
+import java.util.*;
 /**
  *
  * @author Dan
  */
 public class Normaliser {
-    //setup normalised titles
-    String title1="architect", title2="Software Engineer";
-    String title3="quantity surveyor", title4 = "Accountant";
-    public String Normaliser(String jt){
+    /*recieve normalised titles-assuming they are passed, otherwise would only
+    be referenced*/
+    public String Normaliser(String jt, String[] nt){
         String title = jt;
-        //get normalised title similarity scores
-        int result1 = Levenshtein(title,title1), result2 = Levenshtein(title,title2);
-        int result3 = Levenshtein(title,title3), result4 = Levenshtein(title,title4);
+        String[] normTitles = nt;
+        //get normalised title similarity scores(lower is better for less edits)
         //find title with highest similarity and return it
-        if (result1<result2&&result1<result3&&result1<result4){
-            return title1;
-        }else
-        if (result2<result1&&result2<result3&&result2<result4){
-            return title2;
-        }else
-        if (result3<result2&&result3<result1&&result3<result4){
-            return title3;
-        }else    
-        if (result4<result2&&result4<result3&&result4<result1){
-            return title4;
+        //Following ensures Array is right length
+        int[] simScores =new int[normTitles.length];
+        for (int i=0;i<simScores.length;i++) {
+            simScores[i]=(Levenshtein(title, normTitles[i]));
         }
-        else return null;
+        int bestScoreLocation=0;
+        for(int i=0;i<simScores.length;i++){
+            if (simScores[i]<simScores[bestScoreLocation]) bestScoreLocation =i;
+        }
+        return normTitles[bestScoreLocation];
     }
 
     public int Levenshtein(String a, String b) {
